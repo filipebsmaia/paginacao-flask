@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
+    <title>Sistemas Automatizados na Industa 4.0</title>
+
+    <style>
+      * {        
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+    
+        font-family: 'Roboto', sans-serif;
+  
+      }
+
+      html, body {
+        background-color: #e9ebee;
+      }
+
+      h1 {
+        font-weight: 500;
+        text-align: center;
+      }
+
+      body {
+        padding: 16px;
+      }
+
+      .persons {
+        display: flex;
+        max-width: 1200px;
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .persons-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .box {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        max-width: 352px;
+        height: 80px;
+        padding: 8px;
+        background-color: #FFF;
+        border-radius: 8px;
+      }
+
+      .box-image {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+      }
+
+      .box-names {
+        display: flex;
+        flex-direction: column;
+        margin-left: 16px;
+      }
+
+      .box-names-name {
+        font-size: 14px;
+      }
+      
+      .page-container {
+        display: flex;
+        align-items: center;
+        margin: 16px;
+      }
+      
+      .page-text {
+        margin: 0 16px;
+        font-size: 20px;
+        text-decoration: none;
+        cursor: pointer;
+        color: #666;
+        transition: color 0.3s linear;
+      }
+      
+      .page-icon {
+        margin: 0 16px;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        cursor: pointer;
+        color: #666;
+      }
+      
+      .page-current, .page-text:hover {
+        color: #000;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="persons">
+      <h1>Alunos de Sistemas Automatizados na Industa 4.0 </h1>
+      <div class="persons-container">
+        {% for person in persons.list %}
+        
+        <div class="box">
+          <!-- <img class="box-image" src="https://mediacdns3.ulife.com.br/Community/Images/noImage.jpg?version=201910030000"> -->
+          <img class="box-image" src="https://i.pravatar.cc/128?u={{ person.name }} {{ person.surname }} ">
+          <div class="box-names">
+            <!-- {{ loop.index }} -->
+            <span class="box-names-name">{{ person.name }}</span>
+            <span class="box-names-name">{{ person.surname }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="page-container">
+        {% if persons.page > 1 %}
+          <a class="page-icon"  href="{{ url_for('index', page=persons.page - 1) }}">
+            <i data-feather="chevron-left"></i>
+          </a>
+        {% endif %}
+
+        {% for page in range(persons.pages) %}
+          {% if (page + 1) == persons.page %}
+            <a class="page-text page-current" href="{{ url_for('index', page=page + 1) }}"> {{page + 1}} </a>
+          {% else %}
+            <a class="page-text"  href="{{ url_for('index', page=page + 1) }}"> {{page + 1}} </a>
+          {% endif %}
+        {% endfor %}
+
+        {% if persons.page != persons.pages %}
+          <a class="page-icon"  href="{{ url_for('index', page=persons.page + 1) }}">
+            <i data-feather="chevron-right"></i>
+          </a>          
+        {% endif %}
+
+      </div>
+    </div>
+  </body>
+
+  <script>
+    feather.replace()
+  </script>
+</html>
+
+
